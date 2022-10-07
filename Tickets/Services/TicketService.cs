@@ -1,16 +1,41 @@
-﻿using System.Text.Json;
-using System.Text.Json.Nodes;
+﻿
+using Microsoft.AspNetCore.Mvc;
+using Tickets.Data;
+using Tickets.Model;
 using Tickets.Model.DTO;
-using Tickets.Services.JSONValidation;
+using Tickets.Validation;
 
 namespace Tickets.Services;
 
-public class TicketService
+public class TicketService : ITicketService
 {
-    public async Task ProcessTicketSell(JsonNode? body)
-    {
-        
-        
+    private readonly SegmentRepository _repository;
+    private readonly EntityValidator _validator;
 
+    public TicketService(SegmentRepository repository, EntityValidator validator)
+    {
+        _repository = repository;
+        _validator = validator;
+    }
+
+    public async Task<ActionResult> ProcessTicketSell(SoldTicketDto? ticketDto)
+    {
+        if (_validator.IsSellEntityValid(ticketDto.Passenger))
+        {
+            var segments = SegmentMapper.Map(ticketDto: ticketDto);
+            await _repository.SaleTicketAsync(segments);
+        }
+
+        return new OkResult();
+    }
+
+    public async Task<ActionResult> ProcessTicketRefund(RefundedTicketDto? ticketDto)
+    {
+        if (_validator.IsRefundEntityValid(ticketDto))
+        {
+            await _repository.RefundTicketAsync(ticketDto);
+        }
+
+        return new OkResult();
     }
 }

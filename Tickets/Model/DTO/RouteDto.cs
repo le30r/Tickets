@@ -14,18 +14,18 @@ public class RouteDto
     public string DepartPlace { get; set; }
     
     [JsonPropertyName("depart_datetime")]
-    public DateTime DepartDateTime { get; set; }
+    public DateTimeOffset DepartDateTime { get; set; }
     
     [JsonPropertyName("arrive_place")]
     public string ArrivePlace { get; set; }
 
     [JsonPropertyName("arrive_datetime")]
-    public string ArriveDateTime { get; set; }
+    public DateTimeOffset ArriveDateTime { get; set; }
     
     [JsonPropertyName("pnr_id")]
     public string PnrId { get; set; }
 
-    public RouteDto(long flightNum, string airlineCode, string departPlace, DateTime departDateTime, string arrivePlace, string arriveDateTime, string pnrId)
+    public RouteDto(long flightNum, string airlineCode, string departPlace, DateTimeOffset departDateTime, string arrivePlace, DateTimeOffset arriveDateTime, string pnrId)
     {
         FlightNum = flightNum;
         AirlineCode = airlineCode;

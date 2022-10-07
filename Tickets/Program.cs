@@ -1,10 +1,13 @@
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Tickets.Data;
+using Tickets.Middleware;
 using Tickets.Model;
-    
-var builder = WebApplication.CreateBuilder(args);
+using Tickets.Services;
+using Tickets.Validation;
 
+var builder = WebApplication.CreateBuilder(args);
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 // Add services to the container.
 builder.Services.AddDbContext<TicketsContext>(o => o
     .UseNpgsql(builder
@@ -12,25 +15,24 @@ builder.Services.AddDbContext<TicketsContext>(o => o
         .GetConnectionString("Default"))
     .UseSnakeCaseNamingConvention());
 
+builder.Services.AddTransient<ExceptionHandlerMiddleware>();
+builder.Services.AddTransient<JsonValidationMiddleware>();
+builder.Services.AddTransient<RequestSizeMiddleware>();
+builder.Services.AddSingleton<EntityValidator>();
+builder.Services.AddScoped<SegmentRepository>();
+builder.Services.AddScoped<ITicketService, TicketService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApiVersioning(options => options.DefaultApiVersion = new ApiVersion(1, 0));
-builder.Services.Configure<FormOptions>(options => options.MultipartBodyLengthLimit = 2048);
-
 var app = builder.Build();
 
-
-
-
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
+app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.UseMiddleware<RequestSizeMiddleware>();
+app.UseMiddleware<JsonValidationMiddleware>();
 app.MapControllers();
-
-
 
 app.Run();

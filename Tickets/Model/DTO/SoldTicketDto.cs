@@ -10,7 +10,7 @@ public class SoldTicketDto
     
     
     [JsonPropertyName("operation_time")]
-    public DateTime OperationTime { get; set; }
+    public DateTimeOffset OperationTime { get; set; }
     
     [JsonPropertyName("operation_place")]
     public string OperationPlace { get; set; }
@@ -20,4 +20,13 @@ public class SoldTicketDto
     
     [JsonPropertyName("routes")]
     public List<RouteDto> Routes { get; set; }
+
+    public SoldTicketDto(string operationType, DateTimeOffset operationTime, string operationPlace, PassengerDto passenger, List<RouteDto> routes)
+    {
+        OperationType = operationType;
+        OperationTime = operationTime;
+        OperationPlace = operationPlace;
+        Passenger = passenger;
+        Routes = routes;
+    }
 }

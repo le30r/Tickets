@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Tickets.Model;
+using Tickets.Data;
 
 #nullable disable
 
 namespace Tickets.Migrations
 {
     [DbContext(typeof(TicketsContext))]
-    [Migration("20221004210052_Init")]
-    partial class Init
+    [Migration("20221007221529_SecondDateTimeUpdate")]
+    partial class SecondDateTimeUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,8 +30,8 @@ namespace Tickets.Migrations
                         .HasColumnType("text")
                         .HasColumnName("ticket_number");
 
-                    b.Property<string>("SerialNumber")
-                        .HasColumnType("text")
+                    b.Property<int>("SerialNumber")
+                        .HasColumnType("integer")
                         .HasColumnName("serial_number");
 
                     b.Property<string>("AirlineCode")
@@ -39,10 +39,13 @@ namespace Tickets.Migrations
                         .HasColumnType("text")
                         .HasColumnName("airline_code");
 
-                    b.Property<string>("ArriveDateTime")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<DateTime>("ArriveDateTime")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("arrive_datetime");
+
+                    b.Property<short>("ArriveDateTimeTimezone")
+                        .HasColumnType("smallint")
+                        .HasColumnName("arrive_datetime_timezone");
 
                     b.Property<string>("ArrivePlace")
                         .IsRequired()
@@ -53,6 +56,10 @@ namespace Tickets.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("depart_datetime");
 
+                    b.Property<short>("DepartDateTimeTimezone")
+                        .HasColumnType("smallint")
+                        .HasColumnName("depart_datetime_timezone");
+
                     b.Property<string>("DepartPlace")
                         .IsRequired()
                         .HasColumnType("text")
@@ -61,6 +68,14 @@ namespace Tickets.Migrations
                     b.Property<long>("FlightNum")
                         .HasColumnType("bigint")
                         .HasColumnName("flight_num");
+
+                    b.Property<DateTime>("OperationTime")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("operation_time");
+
+                    b.Property<short>("OperationTimeTimezone")
+                        .HasColumnType("smallint")
+                        .HasColumnName("operation_time_timezone");
 
                     b.Property<string>("PnrId")
                         .IsRequired()

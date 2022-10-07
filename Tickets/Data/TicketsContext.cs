@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Tickets.Model;
 
-namespace Tickets.Model;
+namespace Tickets.Data;
 
 public class TicketsContext : DbContext
 {
@@ -14,9 +15,7 @@ public class TicketsContext : DbContext
     {
         modelBuilder.Entity<Segment>()
             .HasKey(s => new { s.TicketNumber, s.SerialNumber }).HasName("PK_TicketSerial");
-       
-
     }
     
-    public DbSet<Segment> Segments { get; set; }
+    public DbSet<Segment>? Segments { get; set; }
 }

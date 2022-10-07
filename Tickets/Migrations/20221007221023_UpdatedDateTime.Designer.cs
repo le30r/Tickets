@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tickets.Data;
@@ -11,9 +12,10 @@ using Tickets.Data;
 namespace Tickets.Migrations
 {
     [DbContext(typeof(TicketsContext))]
-    partial class TicketsContextModelSnapshot : ModelSnapshot
+    [Migration("20221007221023_UpdatedDateTime")]
+    partial class UpdatedDateTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,7 +40,7 @@ namespace Tickets.Migrations
                         .HasColumnName("airline_code");
 
                     b.Property<DateTime>("ArriveDateTime")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("arrive_datetime");
 
                     b.Property<short>("ArriveDateTimeTimezone")
@@ -51,7 +53,7 @@ namespace Tickets.Migrations
                         .HasColumnName("arrive_place");
 
                     b.Property<DateTime>("DepartDateTime")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("depart_datetime");
 
                     b.Property<short>("DepartDateTimeTimezone")
@@ -68,7 +70,7 @@ namespace Tickets.Migrations
                         .HasColumnName("flight_num");
 
                     b.Property<DateTime>("OperationTime")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("operation_time");
 
                     b.Property<short>("OperationTimeTimezone")

@@ -5,43 +5,38 @@ using Microsoft.AspNetCore.Mvc;
 using Tickets.Model;
 using Tickets.Model.DTO;
 using Tickets.Services;
-using Tickets.Services.JSONValidation;
+using Tickets.Validation.JsonValidation;
 
 namespace Tickets.Controllers.V1;
 
 [ApiController]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
-public class ProcessController : Controller
+public class ProcessController : ControllerBase
 {
-    private readonly ILogger<ProcessController> _logger;
-    private readonly IConfiguration _configuration;
+    private readonly ITicketService _ticketService;
 
-    public ProcessController(ILogger<ProcessController> logger, IConfiguration configuration)
+
+    public ProcessController(ITicketService ticketService)
     {
-        _logger = logger;
-        _configuration = configuration;
+        _ticketService = ticketService;
     }
 
     
     [HttpPost]
     [Route("sale")]
-    public async Task<ActionResult> PostSale([FromBody]JsonNode body)
+    public async Task<ActionResult> PostSale([FromBody]JsonNode? body)
     {
-        JSONValidationService validationService = new JSONValidationService(_configuration);
-        if (validationService.IsValidSell(body))
-            return Ok();
-        else return Conflict();
-
+        
+        return await _ticketService.ProcessTicketSell(body.Deserialize<SoldTicketDto>());
     }
     
     [HttpPost]
     [Route("refund")]
-    public async Task<ActionResult> PostRefund([FromBody]JsonNode body)
+    public async Task<ActionResult> PostRefund([FromBody]JsonNode? body)
     {
-        SoldTicketDto soldTicket = JsonSerializer.Deserialize<SoldTicketDto>(body);
-        Console.Out.WriteLine(soldTicket);
-        return Ok(soldTicket);
+       return await _ticketService.ProcessTicketRefund(body.Deserialize<RefundedTicketDto>());
+       
     }
     
     

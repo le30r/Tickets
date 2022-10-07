@@ -10,7 +10,7 @@ public class RefundedTicketDto
     
     
     [JsonPropertyName("operation_time")]
-    public DateTime OperationTime { get; set; }
+    public DateTimeOffset OperationTime { get; set; }
     
     [JsonPropertyName("operation_place")]
     public string OperationPlace { get; set; }
@@ -18,7 +18,7 @@ public class RefundedTicketDto
     [JsonPropertyName("ticket_number")] 
     public string TicketNumber { get; set; }
 
-    public RefundedTicketDto(string operationType, DateTime operationTime, string operationPlace, string ticketNumber)
+    public RefundedTicketDto(string operationType, DateTimeOffset operationTime, string operationPlace, string ticketNumber)
     {
         OperationType = operationType;
         OperationTime = operationTime;

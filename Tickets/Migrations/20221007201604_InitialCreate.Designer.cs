@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tickets.Data;
@@ -11,9 +12,10 @@ using Tickets.Data;
 namespace Tickets.Migrations
 {
     [DbContext(typeof(TicketsContext))]
-    partial class TicketsContextModelSnapshot : ModelSnapshot
+    [Migration("20221007201604_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +39,7 @@ namespace Tickets.Migrations
                         .HasColumnType("text")
                         .HasColumnName("airline_code");
 
-                    b.Property<DateTime>("ArriveDateTime")
+                    b.Property<DateTimeOffset>("ArriveDateTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("arrive_datetime");
 
@@ -50,7 +52,7 @@ namespace Tickets.Migrations
                         .HasColumnType("text")
                         .HasColumnName("arrive_place");
 
-                    b.Property<DateTime>("DepartDateTime")
+                    b.Property<DateTimeOffset>("DepartDateTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("depart_datetime");
 
@@ -67,7 +69,7 @@ namespace Tickets.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("flight_num");
 
-                    b.Property<DateTime>("OperationTime")
+                    b.Property<DateTimeOffset>("OperationTime")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("operation_time");
 
