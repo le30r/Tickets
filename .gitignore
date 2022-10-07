@@ -20,6 +20,9 @@
 **/.idea/**/*.iml
 **/.idea/**/contentModel.xml
 **/.idea/**/modules.xml
+**/.idea/**/.idea/sonarlint/
+
+**/.idea/**/.idea/sonarlint/issuestore
 
 *.suo
 *.user
