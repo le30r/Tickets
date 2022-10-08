@@ -2,13 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tickets.Data;
 using Tickets.Middleware;
-using Tickets.Model;
 using Tickets.Services;
 using Tickets.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-// Add services to the container.
+
 builder.Services.AddDbContext<TicketsContext>(o => o
     .UseNpgsql(builder
         .Configuration

@@ -1,4 +1,5 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Tickets.Data;
 using Tickets.Model;
@@ -25,6 +26,10 @@ public class TicketService : ITicketService
             var segments = SegmentMapper.Map(ticketDto: ticketDto);
             await _repository.SaleTicketAsync(segments);
         }
+        else
+        {
+            throw new ValidationException();
+        }
 
         return new OkResult();
     }
@@ -34,6 +39,10 @@ public class TicketService : ITicketService
         if (_validator.IsRefundEntityValid(ticketDto))
         {
             await _repository.RefundTicketAsync(ticketDto);
+        }
+        else
+        {
+            throw new ValidationException();
         }
 
         return new OkResult();

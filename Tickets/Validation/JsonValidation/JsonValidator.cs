@@ -22,7 +22,6 @@ public class JsonValidator
     public static bool Validate(JsonNode? json, string name)
     {
         var jsonSchema = JsonSchema.FromFile(PathToSchemas + Path.AltDirectorySeparatorChar + name + ".json");
-        var isValid = jsonSchema.Validate(json).IsValid;
-        return isValid;
+        return jsonSchema.Validate(json).IsValid;
     }
 }

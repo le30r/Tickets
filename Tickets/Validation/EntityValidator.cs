@@ -16,12 +16,8 @@ public class EntityValidator
                        && IsTicketNumberValid(passengerDto.TicketNumber)
                        && IsDocTypeAndNumberValid(passengerDto.DocType, passengerDto.DocNumber))
                       && IsBirthdateValid(passengerDto.Birthdate);
-        if (!isValid)
-        {
-            throw new ValidationException();
-        }
-
-        return true;
+        
+        return isValid;
     }
 
     public bool IsRefundEntityValid(RefundedTicketDto refundedTicketDto)

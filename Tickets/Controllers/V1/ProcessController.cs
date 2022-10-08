@@ -25,18 +25,16 @@ public class ProcessController : ControllerBase
     
     [HttpPost]
     [Route("sale")]
-    public async Task<ActionResult> PostSale([FromBody]JsonNode? body)
+    public async Task<ActionResult> PostSale([FromBody]SoldTicketDto body)
     {
-        
-        return await _ticketService.ProcessTicketSell(body.Deserialize<SoldTicketDto>());
+        return await _ticketService.ProcessTicketSell(body);
     }
     
     [HttpPost]
     [Route("refund")]
-    public async Task<ActionResult> PostRefund([FromBody]JsonNode? body)
+    public async Task<ActionResult> PostRefund([FromBody]RefundedTicketDto body)
     {
-       return await _ticketService.ProcessTicketRefund(body.Deserialize<RefundedTicketDto>());
-       
+        return await _ticketService.ProcessTicketRefund(body);
     }
     
     

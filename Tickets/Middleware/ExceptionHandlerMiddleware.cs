@@ -26,7 +26,7 @@ public class ExceptionHandlerMiddleware : IMiddleware
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
            
         }
-        catch (Exception exception) when (exception is DbUpdateException)
+        catch (DbUpdateException exception)
         {
             context.Response.StatusCode = StatusCodes.Status409Conflict;
            
